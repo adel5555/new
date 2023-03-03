@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+  
+<div style="direction: rtl;" class="wrapper">
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div   class="content-wrapper p-5">
+    {% if user.role == "AUTHOR" %}
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <span style="margin-left: 10px; font-size: large;">لإضافة كتابة جديد</span>
+        <a href="{% url 'book_create' %}" class="btn-success p-2 " style="border-radius: 4px;">add new book</a>
+      </div>
+    {% endif %}
+    </section>
+    {% if book_search %}
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>نتائج البحث </h1>
+          </div>
+
+        </div>
+          {% for book in book_search %}
+          <section class="content">                  
+            <!-- Default box -->
+            <div class="card card-solid">
+              <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+                  <!-- بداية الكتاب -->
+                  {% for book in book_search %}
+                  
+                    <div   class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch ">
+                      <div  id="" class="card bg-light">
+                        <div  class="card-header text-muted border-bottom-0">
+                          تصنيف الكتاب
+                        </div>
+                        <div class="card-body pt-0">
+                          <div class="row">
+                            <a href="{% url 'book_detail'  book.id %}" class="col-7">
+                              <h2 class="lead"><b>{{ book.name }}</b></h2>
+                              <ul class="  fa-ul text-muted">
+                                <li class="small"><span class="fa-li"></span>المؤلف: {{book.author.username}}</li>
+                              </ul>
+                            </a>
+                            <div class="col-5 text-center">
+                                <img style="height: 120px; width: 120px;"  src="{% static 'dist/img/photo2.png' %}" alt="" class="img-circle img-fluid">
+                              </div>
+                          </div>
+                        </div>
+                        <div class="card-footer">
+                          {% if book.author == user %}
+                          <div class="text-right">
+                            <a href="{% url 'book_delete' book.id %}" class="btn btn-sm bg-danger">
+                              <i class="fas fa-trash"></i>
+                            </a>
+                            <a href="{% url 'book_update' book.id %}" class="btn btn-sm btn-primary">
+                              <i class="fas fa-book"></i> تعديل
+                            </a>
+                          </div>
+                          
+                          {% elif book.id not in mybookids  %}
+                          <div class="text-right">
+                            <a href="{% url 'add_to_myBook' book.id %}" class="btn btn-sm btn-success">
+                              <i class="fas fa-book"></i> اضافة الى كتبي
+                            </a>
+                          </div>
+                          {% else %}
+                          <div class="text-right">
+                            <a href="{% url 'book_reading' book.id %}" class="btn btn-sm btn-info">
+                              <i class="fas fa-book"></i> تابع القراءة
+                            </a>
+                          </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                      
+                    </div>
+                  {% endfor %}
+                   <!-- نهاية الكتاب -->
+                </div>
+              </div>
+              <!-- /.card-body -->
+  
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+      
+          </section>
+          {% endfor %}
+
+    {% endif %}
+    <!-- Content Header (Page header) -->
+        <section>
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>الكتب</h1>
+              </div>
+
+            </div>
+        </section>
+    
+        <!-- Main content -->
+        <section class="content">                  
+          <!-- Default box -->
+          <div class="card card-solid">
+            <div class="card-body pb-0">
+              <div class="row d-flex align-items-stretch">
+                <!-- بداية الكتاب -->
+                {% for book in book_list %}
+                {% if book.id not in mybookids %}
+                  <div   class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch ">
+                    <div  id="" class="card bg-light">
+                      <div  class="card-header text-muted border-bottom-0">
+                        تصنيف الكتاب
+                      </div>
+                      <div class="card-body pt-0">
+                        <div class="row">
+                          <a href="{% url 'book_detail'  book.id %}" class="col-7">
+                            <h2 class="lead"><b>{{ book.name }}</b></h2>
+                            <ul class="  fa-ul text-muted">
+                              <li class="small"><span class="fa-li"></span>المؤلف: {{book.author.username}}</li>
+                            </ul>
+                          </a>
+                          <div class="col-5 text-center">
+                              <img style="height: 120px; width: 120px;"  src="{% static 'dist/img/photo2.png' %}" alt="" class="img-circle img-fluid">
+                            </div>
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        {% if book.author == user %}
+                        <div class="text-right">
+                          <a href="{% url 'book_delete' book.id %}" class="btn btn-sm bg-danger">
+                            <i class="fas fa-trash"></i>
+                          </a>
+                          <a href="{% url 'book_update' book.id %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-book"></i> تعديل
+                          </a>
+                        </div>
+                        {% else %}
+                        <div class="text-right">
+                          <a href="{% url 'add_to_myBook' book.id %}" class="btn btn-sm btn-success">
+                            <i class="fas fa-book"></i> اضافة الى كتبي
+                          </a>
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                    
+                  </div>
+                {% endif %}
+                {% endfor %}
+                 <!-- نهاية الكتاب -->
+              </div>
+            </div>
+            <!-- /.card-body -->
+
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+    
+        </section>
+        <!-- /.content -->
+        {% comment %} my book  {% endcomment %}
+        {% if my_book%}
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>كتبي</h1>
+          </div>
+
+        </div>
+          <section class="content">                  
+            <!-- Default box -->
+            <div class="card card-solid">
+              <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+                  <!-- بداية الكتاب -->
+                  {% for mbook in my_book %}
+                    {% for book in book_list %}
+                      {% if mbook.Book_id == book.id %}
+                        <div   class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch ">
+                          <div  id="" class="card bg-light">
+                            <div  class="card-header text-muted border-bottom-0">
+                              تصنيف الكتاب
+                            </div>
+                            <a  href="{% url 'book_detail'  book.id %}" class="card-body pt-0">
+                              <div class="row">
+                                <div class="col-7">
+                                  <h2 class="lead"><b>{{ book.name }}</b></h2>
+                                  <ul class="  fa-ul text-muted">
+                                    <li class="small"><span class="fa-li"></span>المؤلف: {{book.author.username}}</li>
+                                    <li class="small"><span class="fa-li"></span>اخر قراءة:<br>{{mbook.updated_at|naturaltime}}</li>
+                                    <li class="small"><span class="fa-li"></span>تابع القراءة من الصفحة: {{mbook.continue_reading_from_this_page}}</li>
+                                  </ul>
+                                </div>
+                                <div class="col-5 text-center">
+                                    <img style="height: 120px; width: 120px;"  src="{% static 'dist/img/photo2.png' %}" alt="" class="img-circle img-fluid">
+                                  </div>
+                              </div>
+                            </a>
+                            <div class="card-footer">
+                              <div class="text-right">
+                                <a href="{% url 'book_reading' book.id %}" class="btn btn-sm btn-info">
+                                  <i class="fas fa-book"></i> تابع القراءة
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                  {% endif %}
+                  {% endfor %}
+                  {% endfor %}
+                  <!-- نهاية الكتاب -->
+                </div>
+              </div>
+              <!-- /.card-body -->
+
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+      
+          </section>
+        
+        {% endif %}
+
+
+        
+
+      </div>
+      <!-- /.content-wrapper -->
+    
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+
+
+
+{% comment %} 
+  <h1>Books</h1>
+  {% if user.is_authenticated %}
+  <h1>hi {{user.first_name|upper}} you are in {{user.role}} mode {{user.id}}</h1>
+  {% endif %}
+  <p>
+  {% if book_list %}
+  <ul>
+    {% for book in book_list %}
+    {% if book.id not in mybookids %}
+      <li>
+          <a href="{% url 'book_detail'  book.id %}">{{ book.name }}</a>(
+          <a href="{% url 'add_to_myBook'  book.id %}">add to my book</a> )
+          {% if book.author == user %}
+          (<a href="{% url 'book_update' book.id %}">Edit</a> |
+          <a href="{% url 'book_delete' book.id %}">Delete</a> )
+          {% endif %}
+      </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no books in the database.</p>
+  {% endif %}
+
+  {% if my_book%}
+    <h1>my book</h1>
+    {% for mbook in my_book %}
+      {% for book in book_list %}
+        {% if mbook.Book_id == book.id %}
+        <div style="display:flex; align-items: center;">
+          <p style="margin-right:30px;">{{book.name}} last time you read this book {{mbook.updated_at|naturaltime}} on page {{mbook.continue_reading_from_this_page}}</p>
+          <a href="{% url 'book_reading' book.id %}" >Continue Reading</a>
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
+
+
+  </p>
+  {% if user.role == 'AUTHOR' %}
+  <a href="{% url 'book_create' %}">Add an Book</a> |
+  {% endif %}
+  {% if user.is_authenticated %}
+  <a href="{% url 'logout' %}?next={% url 'all' %}">Logout</a>
+  {% else %}
+  <a href="{% url 'login' %}?next={% url 'all' %}">Login</a> |
+  <a href="{% url 'register' %}?next={% url 'all' %}">register</a>
+  {% endif %} {% endcomment %}
+
+  <div id="loader-wraper" style="background-color: white; position:absolute; display: flex; justify-content: center; align-items: center;width: 100%;height: 100%; top: 0; left: 0; flex-direction: column;">
+    <img src="media/Book.gif">  
+    <h2>Loading</h2>
+  </div>
+  
+
+
+  <script>
+    function delay(time) {
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
+    window.addEventListener("load", (event) => {
+      delay(2000).then(() => document.getElementById("loader-wraper").style.display = "none");
+      
+    });
+  </script>
+
+{% endblock %}

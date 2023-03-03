@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div style="margin-top: 40px;"></div>
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div class = "hover-shadow" style="padding:20px;
+    box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26); min-width: 200px; width: 40%;">
+        <form method= "POST">
+            {% csrf_token %}
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                {{ form.username|add_class:"form-control" }}
+              <label class="form-label" for="form2Example1">اسم المستخدم</label>
+            </div>
+          
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                {{ form.password|add_class:"form-control" }}
+              
+              <label class="form-label" for="form2Example2">كلمة السر</label>
+            </div>
+          
+            <!-- 2 column grid layout for inline styling -->
+            <div class="row mb-4">
+              <div class="col d-flex justify-content-center">
+                <!-- Checkbox -->
+                <div class="col align-content-center">
+                    <a href="{% url 'register' %}">انشاء حساب جديد</a>
+                </div>
+              </div>
+          
+              <div class="col">
+                <!-- Simple link -->
+                
+              </div>
+            </div>
+          
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">تسجيل الدخول</button>
+          </form>
+
+    </div>
+</div>
+<!-- 
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form> -->
+
+{% endblock content %}

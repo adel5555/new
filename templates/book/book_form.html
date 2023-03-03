@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div style="margin-top: 30px;">
+<form dir="ltr" action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <!-- {{ form }} -->
+  <div dir="ltr" style="width: 60%; margin: 0 auto;">
+    {{ form.name|add_class:"form-control form-control-lg" }}
+    <div class="form-group" style=" text-align: left; ">
+      <label for="exampleFormControlFile1">ادخل ملف الكتاب</label>
+      {{form.text_book|add_class:"form-control-file"}}
+    </div>
+    <input class="btn-success" type="submit" value="Submit">
+    <input class="btn-danger" type="submit" value="Cancel" onclick="window.location.href='{% url 'all' %}';return false;">
+  </div>
+</form>
+</div>
+{% endblock content %}

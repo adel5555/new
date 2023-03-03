@@ -1,0 +1,19 @@
+
+
+
+
+{% for line in content %}
+    <p>{{line}},</p>
+{% endfor %}
+<p>page number {{pages.page_number}}</p>
+<div style="display: flex; justify-content: space-around; align-content:space-between;">
+    {% if pages.book.MaxPageNumber > pages.page_number %}
+        <a href=""> next </a>
+    {% endif %}
+    
+    <a href={% url 'all' %}>back to my book</a>
+    {% if pages.page_number > 1 %}
+        <a href=""> pre </a>
+    {% endif %}
+    
+</div>

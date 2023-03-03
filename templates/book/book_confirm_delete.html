@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div style="display: flex; justify-content: center; align-items:  center; flex-direction: column; ">
+  <p style="margin-top: 100px;"></p>
+  <h1>هل انت متاكد تريد حذف هذا الكتاب ؟</h1>
+  <form action="" method="post" >
+    {% csrf_token %}
+    <input type="submit" value="نعم" class="btn-success">
+    <input type="submit" value="لا" onclick="window.location.href='{% url 'all' %}';return false;" class="btn-danger" style="margin-right: 20px;">
+  </form>
+</div>
+
+{% endblock content %}

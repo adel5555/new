@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <div style="margin-top: 30px;">
+
+    </div>
+    <h1 style=" text-align: center;">{{ book.name }}</h1>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <span style="float: center;">
+            ({{ book.updated_at|naturaltime }})
+        </span>
+        
+        <div>
+            عدد صفحات الكتاب {{ book.MaxPageNumber }}
+        </div>
+    </div>
+    <br>
+    <br>
+    <div style="align-items: center; display: flex; justify-content: center;">
+        {% if book.author == user %}
+            هل ترغب في حذف الكتاب 
+            <a href="{% url 'book_delete' book.id %}" class="btn btn-sm bg-danger">
+                <i class="fas fa-trash"></i>
+            </a>
+        {% elif not I_have_book %}
+            <a href="{% url 'add_to_myBook' book.id %}" class="btn btn-sm btn-success">
+                <i class="fas fa-book"></i> اضافة الى كتبي
+            </a>
+        {% endif %}
+    </div>
+    
+    {% if pages and I_have_book %}
+        {% for page in pages %}
+        <div class="p-5" style="width: 80%; position: absolute; left: 0; text-align: left; display: flex;flex-direction: column;">
+        <div  dir="ltr" >
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <a href = "{% url 'book_page_read' page.id %}" class="card-header">page {{page.page_number}}</a>
+            </div>
+        </div>
+    </div>
+        {% endfor %}
+    {% endif %}
+    </section>
+{% endblock content %}
+
+<span style="float: center;">
+({{ book.updated_at|naturaltime }})
+{% if book.author == user %}
+    <a href="{% url 'book_update' book.id %}">update</a>
+    <a href="{% url 'book_delete' book.id %}">delete</a>
+{% endif %}
+</span>
+<h1>{{ book.name }}</h1>
+<p>
+{{ book.MaxPageNumber }}
+</p>
+<p>
+</p>
+
+
+<p>
+    <a href="{% url 'all' %}">back to all books </a>
+</p>
